@@ -1,0 +1,133 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2312                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// dimensions
+
+frameWidth 0;
+depth 0.1;
+
+cubeWidth 1.5; // 10 cm^3
+gapHeight 1; // 1m (so a lot of room)
+entranceLength 3; // 0.5m
+exitLength 5; // 2m
+
+
+// coordiantes
+x0 0;
+x1 $entranceLength;
+x2 $x1 + $cubeWidth;
+x3 $x2 + $exitLength;
+ 
+y0 0;
+y1 $frameWidth;
+y2 $y1 + $cubeWidth;
+y3 $y2 + $gapHeight;
+y4 $y3 + $frameWidth;
+
+z0 0;
+z1 $depth;
+
+// mesh properties
+deltaX 0.05;
+deltaY 0.05;
+deltaZ $depth;
+
+scale   0.1;
+
+vertices
+(
+    ($x0 $y1 $z0) // 0
+    ($x1 $y1 $z0)
+    ($x1 $y2 $z0)
+    ($x2 $y2 $z0)
+    ($x2 $y1 $z0)
+    ($x3 $y1 $z0)
+    ($x3 $y3 $z0)
+    ($x2 $y3 $z0)
+    ($x1 $y3 $z0)
+    ($x0 $y3 $z0)
+
+    ($x0 $y1 $z1) // 10
+    ($x1 $y1 $z1)
+    ($x1 $y2 $z1)
+    ($x2 $y2 $z1)
+    ($x2 $y1 $z1)
+    ($x3 $y1 $z1)
+    ($x3 $y3 $z1)
+    ($x2 $y3 $z1)
+    ($x1 $y3 $z1)
+    ($x0 $y3 $z1)
+);
+
+blocks
+(
+    hex (0 1 8 9 10 11 18 19) (20 20 1) simpleGrading (1 1 1)
+    hex (2 3 7 8 12 13 17 18) (20 20 1) simpleGrading (1 1 1)
+    hex (4 5 6 7 14 15 17 18) (20 20 1) simpleGrading (1 1 1)
+);
+
+edges
+(
+);
+
+boundary
+(
+    inlet
+    {
+        type patch;
+        faces
+        (
+            (0 9 10 19)
+        );
+    }
+
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (5 6 15 16)
+        );
+    }
+
+    tunnel
+    {
+        type wall;
+        faces
+        (
+            (0 1 10 11)
+            (4 5 14 15)
+            (6 9 16 19)
+        );
+    }    
+
+    cube
+    {
+        type wall;
+        faces
+        (
+            (1 2 11 12)
+            (2 3 12 13)
+            (3 4 13 14)
+        );
+    }
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //
