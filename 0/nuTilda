@@ -20,14 +20,19 @@ internalField   uniform 0;
 
 boundaryField
 {
-    "(movingWall|fixedWalls)"
+    /* "(movingWall|fixedWalls)"
     {
         type            zeroGradient;
-    }
+    } */
 
     frontAndBack
     {
         type            empty;
+    }
+
+    outerwall 
+    {
+        type            zeroGradient;
     }
 }
 

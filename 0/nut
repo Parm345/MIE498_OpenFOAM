@@ -18,11 +18,6 @@ dimensions      [0 2 -1 0 0 0 0];
 internalField   uniform 3.35410197e-03;   // example value (see note below)
 boundaryField
 {
-    wall-2d_v0_boss-extrude1
-    {
-        type            empty;
-    }
-
     inlet
     {
         type            fixedValue;

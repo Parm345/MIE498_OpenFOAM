@@ -15,14 +15,11 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 dimensions      [0 2 -3 0 0 0 0];
+
 internalField   uniform 3.7733647e-04;   // example value (see note below)
+
 boundaryField
 {
-    wall-2d_v0_boss-extrude1
-    {
-        type            empty;
-    }
-
     inlet
     {
         type            fixedValue;

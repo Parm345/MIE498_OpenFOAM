@@ -20,12 +20,6 @@ internalField   uniform 0.00375;
 
 boundaryField
 {
-
-    wall-2d_v0_boss-extrude1
-    {
-        type            empty;
-    }
-
     inlet
     {
         type            fixedValue;

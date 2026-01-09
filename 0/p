@@ -18,8 +18,8 @@ dimensions      [0 2 -2 0 0 0 0];
 
 internalField   uniform 0;
 
-pRefCell        0; //I normal put these in system/fvSolution
-pRefValue       0;
+// pRefCell        0; //I normal put these in system/fvSolution
+// pRefValue       0;
 
 boundaryField
 {
@@ -38,10 +38,6 @@ boundaryField
         type          zeroGradient;
     }
 
-    wall-2d_v0_boss-extrude1  //"(front|back)"
-    {
-        type            empty; 
-    }
 }
 
 
