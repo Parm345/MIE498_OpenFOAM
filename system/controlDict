@@ -47,3 +47,35 @@ runTimeModifiable true;
 // ************************************************************************* //
 
 // I suggest not throwing funciotns in until the case at least isn't crashing
+
+
+functions
+{
+    forceCoeffs
+    {
+        type            forceCoeffs;
+        // functionObjectLibs ("libforces.so" );
+        libs            ("libforces.so");
+
+        // Patches on which forces are computed
+        patches         (outerwall);
+
+        // Reference quantities
+        rho             rhoInf;
+        rhoInf          1000;          // density [kg/m^3] (water)
+        magUInf            1.0;           // free-stream velocity magnitude [m/s]
+        liftDir         (0 0 -1);        // lift direction
+        dragDir         (0 1 0);        // drag direction
+        pitchAxis       (1 0 0);        // moment axis
+
+        // Reference geometry
+        CofR            (0 0 0);        // centre of rotation
+        lRef            1;           // reference length [m]
+        Aref            1;         // reference area [m^2]
+
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
+}
