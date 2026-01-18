@@ -54,7 +54,6 @@ functions
     forceCoeffs
     {
         type            forceCoeffs;
-        // functionObjectLibs ("libforces.so" );
         libs            ("libforces.so");
 
         // Patches on which forces are computed
@@ -67,11 +66,23 @@ functions
         liftDir         (0 0 -1);        // lift direction
         dragDir         (0 1 0);        // drag direction
         pitchAxis       (1 0 0);        // moment axis
+        // writeFields     yes;
 
         // Reference geometry
         CofR            (0 0 0);        // centre of rotation
         lRef            1;           // reference length [m]
         Aref            1;         // reference area [m^2]
+
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
+
+    Q1
+    {
+        type            Q;
+        libs            (fieldFunctionObjects);
 
         // Output control
         writeControl    timeStep;
