@@ -113,4 +113,21 @@ functions
         writeInterval   100;
         log             true;
     }
+
+    turbulenceFields1
+    {
+        // Mandatory entries (unmodifiable)
+        type            turbulenceFields;
+        libs            (fieldFunctionObjects);
+
+        // Mandatory entries (runtime modifiable)
+        // Either field or fields entries
+        fields          (R devRhoReff);
+        field           R;
+
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
 }
