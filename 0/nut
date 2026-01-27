@@ -15,13 +15,13 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 dimensions      [0 2 -1 0 0 0 0];
-internalField   uniform 3.35410197e-03;   // example value (see note below)
+internalField   uniform 4.34e-5;   // example value (see note below)
 boundaryField
 {
     inlet
     {
         type            fixedValue;
-        value           uniform 3.35410197e-03;  // nu_t ≈ C_mu * k^2 / epsilon (example)
+        value           uniform 4.34e-5;  // nu_t ≈ C_mu * k^2 / epsilon (example)
     }
 
     outlet

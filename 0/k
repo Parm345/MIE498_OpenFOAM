@@ -16,14 +16,14 @@ FoamFile
 
 dimensions      [0 2 -2 0 0 0 0];
 
-internalField   uniform 0.00375;
+internalField   uniform 0.00384;
 
 boundaryField
 {
     inlet
     {
         type            fixedValue;
-        value           uniform 0.00375;    // k = 1.5*(U*I)^2 ; example U=1 m/s, I=0.05
+        value           uniform 0.00384;    // k = 1.5*(U*I)^2 ; example U=1 m/s, I=0.05
     }
 
     outlet

@@ -16,7 +16,7 @@ FoamFile
 
 dimensions      [0 0 -1 0 0 0 0];
 
-internalField   uniform 22.4;
+internalField   uniform 8.86;
 
 boundaryField
 {
@@ -26,10 +26,17 @@ boundaryField
     //     value           uniform 22.4;
     // }
 
+
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 8.86; 
+    }
+
     outerwall
     {
         type            omegaWallFunction;
-        value           uniform 22.4;
+        value           uniform 8.86;
     }
 
     frontAndBack

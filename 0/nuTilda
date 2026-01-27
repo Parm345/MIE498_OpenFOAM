@@ -25,6 +25,11 @@ boundaryField
         type            zeroGradient;
     } */
 
+    inlet
+    {
+        type            empty;
+    }
+
     frontAndBack
     {
         type            empty;
