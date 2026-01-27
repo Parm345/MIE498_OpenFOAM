@@ -61,7 +61,7 @@ functions
 
         // Reference quantities
         rho             rhoInf;
-        rhoInf          1000;          // density [kg/m^3] (water)
+        rhoInf          998;          // density [kg/m^3] (water at 20 degree C)
         magUInf            1.0;           // free-stream velocity magnitude [m/s]
         liftDir         (0 0 -1);        // lift direction
         dragDir         (0 1 0);        // drag direction
@@ -84,6 +84,18 @@ functions
         type            Q;
         libs            (fieldFunctionObjects);
 
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
+
+    Co1
+    {
+        // Mandatory entries (unmodifiable)
+        type            CourantNo;
+        libs            (fieldFunctionObjects);
+        
         // Output control
         writeControl    timeStep;
         writeInterval   100;
