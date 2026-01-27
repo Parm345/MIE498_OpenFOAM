@@ -101,4 +101,15 @@ functions
         writeInterval   100;
         log             true;
     }
+
+    yPlus1
+    {
+        type            yPlus;
+        libs            (fieldFunctionObjects);
+
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
 }
