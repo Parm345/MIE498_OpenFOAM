@@ -106,6 +106,7 @@ functions
     {
         type            yPlus;
         libs            (fieldFunctionObjects);
+        // should add region specification, on top surface and around cube
 
         // Output control
         writeControl    timeStep;
