@@ -33,7 +33,7 @@ boundaryField
         value           uniform 8.86; 
     }
 
-    outerwall
+    "(outerwall|cube|upperwall)"
     {
         type            omegaWallFunction;
         value           uniform 8.86;

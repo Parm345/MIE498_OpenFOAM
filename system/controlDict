@@ -57,7 +57,7 @@ functions
         libs            ("libforces.so");
 
         // Patches on which forces are computed
-        patches         (outerwall);
+        patches         (cube);
 
         // Reference quantities
         rho             rhoInf;
@@ -70,8 +70,8 @@ functions
 
         // Reference geometry
         CofR            (0 0 0);        // centre of rotation
-        lRef            1;           // reference length [m]
-        Aref            1;         // reference area [m^2]
+        lRef            0.1;           // reference length [m]
+        Aref            0.01;         // reference area [m^2]
 
         // Output control
         writeControl    timeStep;
@@ -107,6 +107,20 @@ functions
         type            yPlus;
         libs            (fieldFunctionObjects);
         // should add region specification, on top surface and around cube
+        region          cube;
+
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
+
+    yPlus2
+    {
+        type            yPlus;
+        libs            (fieldFunctionObjects);
+        // should add region specification, on top surface and around cube
+        region          upperwall;
 
         // Output control
         writeControl    timeStep;

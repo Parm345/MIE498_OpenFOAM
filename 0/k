@@ -31,7 +31,7 @@ boundaryField
         type            zeroGradient;
     }
 
-    outerwall
+    "(outerwall|cube|upperwall)"
     {
         type            kqRWallFunction;
         value           uniform 0;

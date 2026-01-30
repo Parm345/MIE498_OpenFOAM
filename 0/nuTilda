@@ -35,7 +35,7 @@ boundaryField
         type            empty;
     }
 
-    outerwall 
+    "(outerwall|cube|upperwall)"
     {
         type            zeroGradient;
     }

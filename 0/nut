@@ -29,7 +29,7 @@ boundaryField
         type            zeroGradient;
     }
 
-    outerwall
+    "(outerwall|cube|upperwall)"
     {
         type            nutkWallFunction;
         value           uniform 0;
