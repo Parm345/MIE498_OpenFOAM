@@ -39,10 +39,15 @@ boundaryField
         value           uniform 8.86;
     }
 
-    frontAndBack
+    outlet
     {
-        type            empty;
+        type            zeroGradient;
     }
+
+    // frontAndBack
+    // {
+    //     type            empty;
+    // }
 }
 
 

@@ -34,7 +34,17 @@ boundaryField
         value           uniform 0; //reference value
     }
 
-    "(outerwall|cube|upperwall)"
+    outerwall
+    {
+        type          zeroGradient;
+    }
+
+    cube
+    {
+        type          zeroGradient;
+    }
+
+    upperwall
     {
         type          zeroGradient;
     }
