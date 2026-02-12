@@ -4,6 +4,11 @@
 # !constant/polyMesh
 !system/
 !system/FOs
+<<<<<<< HEAD
 !Meshes
 !Scripts/*
 !Geometry_Model
+=======
+!Scripts/SLURM/
+!Meshes
+>>>>>>> 8337bcd (don't ignore SCRIPTS folder)
