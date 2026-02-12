@@ -4,5 +4,5 @@
 # !constant/polyMesh
 !system/
 !system/FOs
+!Scripts/SLURM/
 !Meshes
-!Scripts/*
