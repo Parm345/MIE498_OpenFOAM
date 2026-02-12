@@ -5,6 +5,7 @@
 !system/
 !system/FOs
 <<<<<<< HEAD
+<<<<<<< HEAD
 !Meshes
 !Scripts/*
 !Geometry_Model
@@ -12,3 +13,7 @@
 !Scripts/SLURM/
 !Meshes
 >>>>>>> 8337bcd (don't ignore SCRIPTS folder)
+=======
+!Scripts/SLURM/
+!Meshes
+>>>>>>> feature/hpc_debug
