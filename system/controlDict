@@ -1,22 +1,22 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2312                                 |
-|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|  \\    /   O peration     | Version:  v13                                   |
+|   \\  /    A nd           | Website:  www.openfoam.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-    version     2.0;
     format      ascii;
     class       dictionary;
+    location    "system";
     object      controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     pisoFoam;
+solver          incompressibleFluid;
 
-startFrom       latestTime;
+startFrom       startTime;
 
 startTime       0;
 
@@ -82,7 +82,7 @@ functions
     Q1
     {
         type            Q;
-        libs            (fieldFunctionObjects);
+        libs            ("libfieldFunctionObjects.so");
 
         // Output control
         writeControl    timeStep;
@@ -94,7 +94,7 @@ functions
     {
         // Mandatory entries (unmodifiable)
         type            CourantNo;
-        libs            (fieldFunctionObjects);
+        libs            ("libfieldFunctionObjects.so");
         
         // Output control
         writeControl    timeStep;
@@ -105,9 +105,10 @@ functions
     yPlus1
     {
         type            yPlus;
-        libs            (fieldFunctionObjects);
+        libs            ("libfieldFunctionObjects.so");
         // should add region specification, on top surface and around cube
-        region          cube;
+        // region          cube;
+        patches          cube;
 
         // Output control
         writeControl    timeStep;
@@ -118,9 +119,9 @@ functions
     yPlus2
     {
         type            yPlus;
-        libs            (fieldFunctionObjects);
+        libs            ("libfieldFunctionObjects.so");
         // should add region specification, on top surface and around cube
-        region          upperwall;
+        patches          upperwall;
 
         // Output control
         writeControl    timeStep;
@@ -128,20 +129,20 @@ functions
         log             true;
     }
 
-    turbulenceFields1
-    {
-        // Mandatory entries (unmodifiable)
-        type            turbulenceFields;
-        libs            (fieldFunctionObjects);
+    // turbulenceFields1
+    // {
+    //     // Mandatory entries (unmodifiable)
+    //     type            turbulenceFields;
+    //     libs            ("libfieldFunctionObjects.so");
 
-        // Mandatory entries (runtime modifiable)
-        // Either field or fields entries
-        fields          (R devRhoReff);
-        field           R;
+    //     // Mandatory entries (runtime modifiable)
+    //     // Either field or fields entries
+    //     fields          (R devRhoReff);
+    //     field           R;
 
-        // Output control
-        writeControl    timeStep;
-        writeInterval   100;
-        log             true;
-    }
+    //     // Output control
+    //     writeControl    timeStep;
+    //     writeInterval   100;
+    //     log             true;
+    // }
 }

@@ -24,16 +24,21 @@ boundaryField
     {
         type            zeroGradient;
     } */
-
     inlet
     {
-        type            empty;
+        type            fixedValue;
+        value           uniform 0;
     }
 
-    frontAndBack
+    outlet
+    {
+        type            zeroGradient;
+    }
+
+    /* frontAndBack
     {
         type            empty;
-    }
+    } */
 
     "(outerwall|cube|upperwall)"
     {

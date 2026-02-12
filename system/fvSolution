@@ -31,7 +31,7 @@ solvers
         relTol          0;
     }
 
-    "(U|k|epsilon|omega|R|nuTilda)"
+    "(U|k|epsilon|omega|R|nuTilda).*"
     {
         solver          smoothSolver;
         smoother        GaussSeidel;
@@ -40,13 +40,30 @@ solvers
     }
 }
 
-PISO
+PIMPLE
 {
     nCorrectors     2;
     nNonOrthogonalCorrectors 0;
     pRefCell        0;
     pRefValue       0;
 }
+
+// PISO
+// {
+//     nCorrectors     2;
+//     nNonOrthogonalCorrectors 0;
+//     pRefCell        0;
+//     pRefValue       0;
+// }
+
+// PIMPLE
+// {
+//     nOuterCorrectors 5;
+//     nCorrectors     2;
+//     nNonOrthogonalCorrectors 0;
+//     transonic       no;
+//     consistent      no;
+// }
 
 // relaxationFactors
 // {
