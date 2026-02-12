@@ -24,7 +24,7 @@ stopAt          endTime;
 
 endTime         10;
 
-deltaT          0.0001;
+deltaT          0.005;
 
 writeControl    timeStep;
 
@@ -49,99 +49,100 @@ runTimeModifiable true;
 // I suggest not throwing funciotns in until the case at least isn't crashing
 
 
-// functions
-// {
-//     forceCoeffs
-//     {
-//         type            forceCoeffs;
-//         libs            ("libforces.so");
+functions
+{
+    forceCoeffs
+    {
+        type            forceCoeffs;
+        libs            ("libforces.so");
 
-//         // Patches on which forces are computed
-//         patches         (cube);
+        // Patches on which forces are computed
+        patches         (cube);
 
-//         // Reference quantities
-//         rho             rhoInf;
-//         rhoInf          998;          // density [kg/m^3] (water at 20 degree C)
-//         magUInf            1.0;           // free-stream velocity magnitude [m/s]
-//         liftDir         (0 0 -1);        // lift direction
-//         dragDir         (0 1 0);        // drag direction
-//         pitchAxis       (1 0 0);        // moment axis
-//         // writeFields     yes;
+        // Reference quantities
+        rho             rhoInf;
+        rhoInf          998;          // density [kg/m^3] (water at 20 degree C)
+        magUInf            1.0;           // free-stream velocity magnitude [m/s]
+        liftDir         (0 0 -1);        // lift direction
+        dragDir         (0 1 0);        // drag direction
+        pitchAxis       (1 0 0);        // moment axis
+        // writeFields     yes;
 
-//         // Reference geometry
-//         CofR            (0 0 0);        // centre of rotation
-//         lRef            0.1;           // reference length [m]
-//         Aref            0.01;         // reference area [m^2]
+        // Reference geometry
+        CofR            (0 0 0);        // centre of rotation
+        lRef            0.1;           // reference length [m]
+        Aref            0.01;         // reference area [m^2]
 
-//         // Output control
-//         writeControl    timeStep;
-//         writeInterval   100;
-//         log             true;
-//     }
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
 
-//     Q1
-//     {
-//         type            Q;
-//         libs            ("libfieldFunctionObjects.so");
+    Q1
+    {
+        type            Q;
+        libs            ("libfieldFunctionObjects.so");
 
-//         // Output control
-//         writeControl    timeStep;
-//         writeInterval   100;
-//         log             true;
-//     }
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
 
-//     Co1
-//     {
-//         // Mandatory entries (unmodifiable)
-//         type            CourantNo;
-//         libs            ("libfieldFunctionObjects.so");
+    Co1
+    {
+        // Mandatory entries (unmodifiable)
+        type            CourantNo;
+        libs            ("libfieldFunctionObjects.so");
         
-//         // Output control
-//         writeControl    timeStep;
-//         writeInterval   100;
-//         log             true;
-//     }
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
 
-//     yPlus1
-//     {
-//         type            yPlus;
-//         libs            ("libfieldFunctionObjects.so");
-//         // should add region specification, on top surface and around cube
-//         region          cube;
+    yPlus1
+    {
+        type            yPlus;
+        libs            ("libfieldFunctionObjects.so");
+        // should add region specification, on top surface and around cube
+        // region          cube;
+        patches          cube;
 
-//         // Output control
-//         writeControl    timeStep;
-//         writeInterval   100;
-//         log             true;
-//     }
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
 
-//     yPlus2
-//     {
-//         type            yPlus;
-//         libs            ("libfieldFunctionObjects.so");
-//         // should add region specification, on top surface and around cube
-//         region          upperwall;
+    yPlus2
+    {
+        type            yPlus;
+        libs            ("libfieldFunctionObjects.so");
+        // should add region specification, on top surface and around cube
+        patches          upperwall;
 
-//         // Output control
-//         writeControl    timeStep;
-//         writeInterval   100;
-//         log             true;
-//     }
+        // Output control
+        writeControl    timeStep;
+        writeInterval   100;
+        log             true;
+    }
 
-//     turbulenceFields1
-//     {
-//         // Mandatory entries (unmodifiable)
-//         type            turbulenceFields;
-//         libs            ("libfieldFunctionObjects.so");
+    // turbulenceFields1
+    // {
+    //     // Mandatory entries (unmodifiable)
+    //     type            turbulenceFields;
+    //     libs            ("libfieldFunctionObjects.so");
 
-//         // Mandatory entries (runtime modifiable)
-//         // Either field or fields entries
-//         fields          (R devRhoReff);
-//         field           R;
+    //     // Mandatory entries (runtime modifiable)
+    //     // Either field or fields entries
+    //     fields          (R devRhoReff);
+    //     field           R;
 
-//         // Output control
-//         writeControl    timeStep;
-//         writeInterval   100;
-//         log             true;
-//     }
-// }
+    //     // Output control
+    //     writeControl    timeStep;
+    //     writeInterval   100;
+    //     log             true;
+    // }
+}
