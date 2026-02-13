@@ -11,6 +11,6 @@
 
 module load openfoam
 
-mesh_path='/home/parmghai/links/scratch/MIE498/first_attempt/MIE498_OpenFOAM/3d_v0.msh'
+mesh_path='/home/parmghai/links/scratch/MIE498/first_attempt/mesh_2_imperfect/mesh3_imperfect_mesh.msh'
 
 fluent3DMeshToFoam $mesh_path
