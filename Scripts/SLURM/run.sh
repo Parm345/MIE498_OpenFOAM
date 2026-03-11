@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="openfoam_cube_med_ts0001"      # job name
+#SBATCH --job-name="openfoam_cube_med_ts0005"      # job name
 
 #SBATCH --ntasks=16                # number of processors
 #SBATCH --nodes=1                # number of nodes
@@ -12,7 +12,7 @@
 
 module load openfoam
 
-projectPath='/home/parmghai/links/scratch/MIE498/final_data/simulation/turbulence_model_1/mdeium_mesh/ts0001'
+projectPath='/home/parmghai/links/scratch/MIE498/final_data/simulation/turbulence_model_1/mdeium_mesh/ts0005'
 
 cd $projectPath
 decomposePar -force | tee log.decompose
