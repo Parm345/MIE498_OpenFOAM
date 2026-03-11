@@ -11,10 +11,6 @@
 
 module load openfoam
 
-<<<<<<< HEAD
 mesh_path='/home/parmghai/links/scratch/MIE498/final_data/simulation/turbulence_model_1/medium_mesh/ts005/medium_mesh.msh'
-=======
-mesh_path='/home/parmghai/links/scratch/MIE498/first_attempt/mesh_2_imperfect/mesh3_imperfect_mesh.msh'
->>>>>>> 33b18dc308ad6ae383a224a9874b860c8e6515b2
 
 fluent3DMeshToFoam $mesh_path
