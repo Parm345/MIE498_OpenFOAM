@@ -12,7 +12,7 @@
 
 module load openfoam
 
-projectPath='/home/parmghai/links/scratch/MIE498/final_data/simulation/turbulence_model_1/mdeium_mesh/ts0005'
+projectPath='/home/parmghai/links/scratch/MIE498/final_data/simulation/turbulence_model_1/medium_mesh/ts0005'
 
 cd $projectPath
 decomposePar -force | tee log.decompose
