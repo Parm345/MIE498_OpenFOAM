@@ -18,3 +18,4 @@ cd $projectPath
 decomposePar -force | tee log.decompose
 mpirun -np 16 foamRun -solver incompressibleFluid -parallel
 reconstructPar
+rm -r processor*
