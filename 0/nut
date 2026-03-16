@@ -31,7 +31,7 @@ boundaryField
 
     "(outerwall|cube|upperwall)"
     {
-        type            nutkWallFunction;
+        type            nutUSpaldingWallFunction;
         value           uniform 0;
     }
 }

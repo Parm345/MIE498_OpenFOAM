@@ -19,7 +19,7 @@ simulationType  RAS;
 
 RAS
 {
-    RASModel        kOmegaSST;    // Realizable k-epsilon model
+    RASModel        SpalartAllmaras;    // Realizable k-epsilon model
     turbulence      on;
     printCoeffs     on;
 }

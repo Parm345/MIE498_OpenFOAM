@@ -16,7 +16,7 @@ FoamFile
 
 dimensions      [0 2 -1 0 0 0 0];
 
-internalField   uniform 0;
+internalField   uniform 5.00e-6;
 
 boundaryField
 {
@@ -27,7 +27,7 @@ boundaryField
     inlet
     {
         type            fixedValue;
-        value           uniform 0;
+        value           uniform 5.00e-6;  // 5 x nu_laminar (water viscosity at 20C)
     }
 
     outlet
@@ -42,6 +42,7 @@ boundaryField
 
     "(outerwall|cube|upperwall)"
     {
+        // value           uniform 0;
         type            zeroGradient;
     }
 }
