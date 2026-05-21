@@ -18,10 +18,10 @@
 set -euo pipefail
 
 # ── Defaults ──────────────────────────────────────────────────────────────────
-REMOTE_ROOT=""
-REMOTE_USER=""
+REMOTE_ROOT="/home/parmghai/links/scratch/MIE498/final_data/simulation"
+REMOTE_USER="parmghai"
 REMOTE_HOST="rorqual.alliancecan.ca"
-LOCAL_DEST=""
+LOCAL_DEST="/home/proparm/OneDrive/Year 4/MIE498/Data/sims"
 
 # ── Argument parsing ──────────────────────────────────────────────────────────
 while getopts "s:u:h:d:" opt; do
@@ -41,11 +41,8 @@ if [[ -z "$REMOTE_ROOT" || -z "$REMOTE_USER" || -z "$REMOTE_HOST" || -z "$LOCAL_
     exit 1
 fi
  
-# Strip trailing slash from remote root for consistent prefix stripping later
 REMOTE_ROOT="${REMOTE_ROOT%/}"
-# Expand ~ in local dest
 LOCAL_DEST="${LOCAL_DEST/#\~/$HOME}"
- 
 REMOTE="$REMOTE_USER@$REMOTE_HOST"
  
 # ── SSH ControlMaster setup ───────────────────────────────────────────────────
@@ -60,66 +57,92 @@ cleanup() {
 }
 trap cleanup EXIT
  
-# Open the master connection (only 2FA prompt)
 echo "Connecting to $REMOTE (you will be prompted for 2FA once)..."
 ssh $SSH_OPTS "$REMOTE" -o BatchMode=no true
  
 echo ""
 echo "Remote source : $REMOTE:$REMOTE_ROOT"
 echo "Local dest    : $LOCAL_DEST"
-echo "Skipping      : timestep dirs, constant, system, 0, processor*, log, log.*"
+echo "Syncing       : postProcessing folders, job_runtime.txt files"
+echo "Skipping      : purely numeric timestep dirs, constant, system, processor*, log, log.*"
 echo "──────────────────────────────────────────────────────────"
  
-# ── Discover postProcessing folders on the remote ─────────────────────────────
-PP_DIRS=()
-while IFS= read -r line; do
-    [[ -z "$line" ]] && continue
-    PP_DIRS+=("$line")
-done < <(
+# ── Helper: run find on remote, pruning OpenFOAM internal dirs ───────────────
+remote_find() {
+    local type="$1"   # -type f or -type d
+    local name="$2"   # e.g. postProcessing or job_runtime.txt
     ssh $SSH_OPTS "$REMOTE" "find '$REMOTE_ROOT' \
         -type d \( \
-            -name '[0-9]*' \
+            -regex '.*/[0-9][0-9eE.+-]*' \
             -o -name 'constant' \
             -o -name 'system' \
             -o -name 'processor*' \
             -o -name 'log' \
             -o -name 'log.*' \
         \) -prune \
-        -o -type d -name 'postProcessing' -print" \
+        -o $type -name '$name' -print" \
     | tr -d '\r'
-)
+}
  
-if [[ ${#PP_DIRS[@]} -eq 0 ]]; then
-    echo "No postProcessing folders found under $REMOTE_ROOT"
-    exit 0
-fi
+# ── Discover postProcessing folders ──────────────────────────────────────────
+PP_DIRS=()
+while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    PP_DIRS+=("$line")
+done < <(remote_find "-type d" "postProcessing")
  
-echo "Found ${#PP_DIRS[@]} postProcessing folder(s):"
-for p in "${PP_DIRS[@]}"; do echo "  $p"; done
+# ── Discover job_runtime.txt files ───────────────────────────────────────────
+RUNTIME_FILES=()
+while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    RUNTIME_FILES+=("$line")
+done < <(remote_find "-type f" "job_runtime.txt")
+ 
+echo "Found ${#PP_DIRS[@]} postProcessing folder(s) and ${#RUNTIME_FILES[@]} job_runtime.txt file(s)."
 echo ""
  
 found=0
 failed=0
  
-# ── Rsync each postProcessing folder ─────────────────────────────────────────
+# ── Rsync postProcessing folders ─────────────────────────────────────────────
 for pp_dir in "${PP_DIRS[@]}"; do
-    # pp_dir is the full absolute remote path, e.g.
-    #   /home/parmghai/.../sst_kw/coarse_mesh/ts0005/postProcessing
-    # Strip the remote root prefix to get the relative path
     rel_path="${pp_dir#"$REMOTE_ROOT"/}"
- 
-    # Build the full local destination parent directory
     dest_parent="$LOCAL_DEST/$(dirname "$rel_path")"
     mkdir -p "$dest_parent"
  
-    echo "Syncing: $rel_path"
+    echo "Syncing dir : $rel_path"
     echo "  → $dest_parent/"
  
-    # Use the full absolute remote path in rsync
     rsync_exit=0
     rsync -az --info=progress2 \
         -e "ssh $SSH_OPTS" \
         "$REMOTE:$pp_dir" \
+        "$dest_parent/" || rsync_exit=$?
+ 
+    if [[ $rsync_exit -eq 0 ]]; then
+        echo "  ✓ Done"
+        ((found++)) || true
+    else
+        echo "  ✗ rsync failed (exit $rsync_exit) for: $rel_path"
+        ((failed++)) || true
+    fi
+ 
+    echo ""
+done
+ 
+# ── Rsync job_runtime.txt files ───────────────────────────────────────────────
+for rt_file in "${RUNTIME_FILES[@]}"; do
+    rel_path="${rt_file#"$REMOTE_ROOT"/}"
+    dest_parent="$LOCAL_DEST/$(dirname "$rel_path")"
+    mkdir -p "$dest_parent"
+ 
+    echo "Syncing file: $rel_path"
+    echo "  → $dest_parent/"
+ 
+    rsync_exit=0
+    rsync -az --info=progress2 \
+        -e "ssh $SSH_OPTS" \
+        "$REMOTE:$rt_file" \
         "$dest_parent/" || rsync_exit=$?
  
     if [[ $rsync_exit -eq 0 ]]; then

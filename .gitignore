@@ -8,3 +8,4 @@
 !Scripts/*
 !Geometry_Model
 !Scripts/SLURM/
+!Scripts/Utils/*.py
